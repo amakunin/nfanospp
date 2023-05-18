@@ -1,6 +1,6 @@
 
 process ANOSPPQC {
-    tag "$meta.id"
+    tag "npgrun"
     label 'process_low'
 
     conda "bioconda::anospp-analysis=0.1.3"
@@ -22,7 +22,7 @@ process ANOSPPQC {
 
     script:
     def args = task.ext.args ?: ''
-    def prefix = task.ext.prefix ?: "${meta.id}"
+    def prefix = task.ext.prefix ?: ''
     """
     anospp-qc \\
         -a $haps_tsv \\

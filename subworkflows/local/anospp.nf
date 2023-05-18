@@ -16,10 +16,10 @@ workflow ANOSPP {
     ch_versions = Channel.empty()
 
     ANOSPPPREP ( dada_table, adapters_fa )
-    ch_versions = ch_versions.mix ( ANOSPPPREP.out.versions.first() )
+    ch_versions = ch_versions.mix ( ANOSPPPREP.out.versions )
 
     ANOSPPQC ( ANOSPPPREP.out.haps_tsv, manifest, dada_stats )
-    ch_versions = ch_versions.mix ( ANOSPPPREP.out.versions.first() )
+    ch_versions = ch_versions.mix ( ANOSPPPREP.out.versions )
 
     emit:
     qc_plots = ANOSPPQC.out.qc_plots // channel: [ val(meta), [ reads ] ]

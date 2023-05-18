@@ -1,6 +1,6 @@
 
 process ANOSPPPREP {
-    tag "$meta.id"
+    tag "npgrun"
     label 'process_low'
 
     conda "bioconda::anospp-analysis=0.1.3"
@@ -9,11 +9,11 @@ process ANOSPPPREP {
         'quay.io/biocontainers/anospp-analysis:0.1.3--pyh7cba7a3_0' }"
 
     input:
-    tuple val(meta), path(dada_table)
+    path dada_table
     path adapters_fa 
 
     output:
-    tuple val(meta), path("*.tsv"), emit: haps_tsv
+    path "*.tsv", emit: haps_tsv
     path "versions.yml"           , emit: versions
 
     when:
@@ -21,7 +21,7 @@ process ANOSPPPREP {
 
     script:
     def args = task.ext.args ?: ''
-    def prefix = task.ext.prefix ?: "${meta.id}"
+    def prefix = task.ext.prefix ?: ''
     """
     anospp-prep \\
         -t $dada_table \\
