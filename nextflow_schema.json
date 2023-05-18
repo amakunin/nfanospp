@@ -10,17 +10,43 @@
             "type": "object",
             "fa_icon": "fas fa-terminal",
             "description": "Define where the pipeline should find input data and save output data.",
-            "required": ["input", "outdir"],
+            "required": ["manifest", "dada_table", "dada_stats", "adapters_fa", "outdir"],
             "properties": {
-                "input": {
+                "manifest": {
                     "type": "string",
                     "format": "file-path",
-                    "mimetype": "text/csv",
-                    "pattern": "^\\S+\\.csv$",
-                    "schema": "assets/schema_input.json",
-                    "description": "Path to comma-separated file containing information about the samples in the experiment.",
-                    "help_text": "You will need to create a design file with information about the samples in your experiment before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row. See [usage docs](https://nf-co.re/nfanospp/usage#samplesheet-input).",
-                    "fa_icon": "fas fa-file-csv"
+                    "mimetype": "text/tsv",
+                    "pattern": "^\\S+\\.tsv$",
+                    "description": "Path to tab-separated file containing information about the samples in the experiment.",
+                    "help_text": "Sample manifest containing information about sample names and sequencing file locations.",
+                    "fa_icon": "fas fa-file-tsv"
+                },
+                "dada_table": {
+                    "type": "string",
+                    "format": "file-path",
+                    "mimetype": "text/tsv",
+                    "pattern": "^\\S+\\.tsv$",
+                    "description": "Path to tab-separated file containing DADA2 table.",
+                    "help_text": "DADA2 table has sample names, sequences as columns, and read counts as values.",
+                    "fa_icon": "fas fa-file-tsv"
+                },
+                "dada_stats": {
+                    "type": "string",
+                    "format": "file-path",
+                    "mimetype": "text/tsv",
+                    "pattern": "^\\S+\\.tsv$",
+                    "description": "Path to tab-separated file with DADA2 stats.",
+                    "help_text": "DADA2 stats has sample names as rows and read counts through filtering as columns.",
+                    "fa_icon": "fas fa-file-tsv"
+                },
+                "adapters_fa": {
+                    "type": "string",
+                    "format": "file-path",
+                    "mimetype": "text",
+                    "pattern": "^\\S+\\.fa$",
+                    "description": "Path to fasta file with adapters.",
+                    "help_text": "Adapters file contains linked primer sequences for all targets as FORWARD...RC_REVERSE with special chars acceptable by cutadapt.",
+                    "fa_icon": "fas fa-file-tsv"
                 },
                 "outdir": {
                     "type": "string",
