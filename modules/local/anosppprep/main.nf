@@ -3,10 +3,10 @@ process ANOSPPPREP {
     tag "npgrun"
     label 'process_low'
 
-    conda "bioconda::anospp-analysis=0.1.3"
+    conda "bioconda::anospp-analysis=0.2.1"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/anospp-analysis:0.1.3--pyh7cba7a3_0' :
-        'quay.io/biocontainers/anospp-analysis:0.1.3--pyh7cba7a3_0' }"
+        'https://depot.galaxyproject.org/singularity/anospp-analysis:0.2.1--pyh7cba7a3_0' :
+        'quay.io/biocontainers/anospp-analysis:0.2.1--pyh7cba7a3_0' }"
 
     input:
     path dada_table
