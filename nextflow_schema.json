@@ -87,6 +87,12 @@
                     "description": "Reference dataset version for nearest neighbour assignment in mosquito species ID",
                     "default": "nnv1",
                     "fa_icon": "fas fa-users-cog"
+                },
+                "vae_ref_version": {
+                    "type": "string",
+                    "description": "Reference dataset version for variational auto-encoder assignment in mosquito species ID",
+                    "default": "gcrefv1",
+                    "fa_icon": "fas fa-users-cog"
                 }
             }
         },

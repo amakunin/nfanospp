@@ -21,6 +21,7 @@ if (params.dada_stats) { ch_dada_stats = file(params.dada_stats) } else { exit 1
 if (params.manifest) { ch_manifest = file(params.manifest) } else { exit 1, 'sample manifest not specified!' }
 if (params.ref_dir) { ch_ref_dir = file(params.ref_dir) } else { exit 1, 'reference directory not specified!' }
 if (params.nn_ref_version) { nn_ref_version = params.nn_ref_version } else { nn_ref_version = 'nnv1' }
+if (params.vae_ref_version) { vae_ref_version = params.vae_ref_version } else { vae_ref_version = 'gcrefv1' }
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -79,7 +80,8 @@ workflow NFANOSPP {
         ch_dada_stats,
         ch_manifest,
         ch_ref_dir,
-        'nnv1'
+        nn_ref_version,
+        vae_ref_version
     )
     ch_versions = ch_versions.mix(ANOSPP.out.versions)
 

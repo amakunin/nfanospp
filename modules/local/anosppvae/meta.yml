@@ -1,10 +1,10 @@
-name: "anosppnn"
-description: "ANOSPP data nearest neighbour mosquito species ID"
+name: "anosppvae"
+description: "ANOSPP data variational auto-encoder mosquito species ID"
 keywords:
   - amplicon
 tools:
-  - "anosppnn":
-      description: "ANOSPP data nearest neighbour mosquito species ID"
+  - "anosppvae":
+      description: "ANOSPP data variational auto-encoder mosquito species ID"
       homepage: "None"
       documentation: "None"
       tool_dev_url: "None"
