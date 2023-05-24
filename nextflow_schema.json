@@ -93,6 +93,12 @@
                     "description": "Reference dataset version for variational auto-encoder assignment in mosquito species ID",
                     "default": "gcrefv1",
                     "fa_icon": "fas fa-users-cog"
+                },
+                "plasm_ref_version": {
+                    "type": "string",
+                    "description": "Reference dataset version for Plasmodium species ID",
+                    "default": "plasmv1",
+                    "fa_icon": "fas fa-users-cog"
                 }
             }
         },

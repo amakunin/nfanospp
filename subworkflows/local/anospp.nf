@@ -6,6 +6,7 @@ include { ANOSPPPREP } from '../../modules/local/anosppprep'
 include { ANOSPPQC } from '../../modules/local/anosppqc'
 include { ANOSPPNN } from '../../modules/local/anosppnn'
 include { ANOSPPVAE } from '../../modules/local/anosppvae'
+include { ANOSPPPLASM } from '../../modules/local/anosppplasm'
 
 workflow ANOSPP {
     take:
@@ -16,6 +17,7 @@ workflow ANOSPP {
     ref_dir // dir: /path/to/ref/data
     nn_ref_version // value: nnv1
     vae_ref_version // value: gcrefv1
+    plasm_ref_version // value: plasmv1
 
     main:
     ch_versions = Channel.empty()
@@ -31,6 +33,9 @@ workflow ANOSPP {
 
     // ANOSPPVAE ( ANOSPPNN.out.nn_haps_tsv, ANOSPPNN.out.nn_assignment, ref_dir, vae_ref_version )
     // ch_versions = ch_versions.mix ( ANOSPPVAE.out.versions )
+
+    ANOSPPPLASM ( ANOSPPPREP.out.haps_tsv, manifest, dada_stats, ref_dir, plasm_ref_version )
+    ch_versions = ch_versions.mix ( ANOSPPNN.out.versions )
 
     emit:
     qc_plots = ANOSPPQC.out.qc_plots // channel: [ val(meta), [ reads ] ]

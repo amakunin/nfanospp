@@ -22,6 +22,7 @@ if (params.manifest) { ch_manifest = file(params.manifest) } else { exit 1, 'sam
 if (params.ref_dir) { ch_ref_dir = file(params.ref_dir) } else { exit 1, 'reference directory not specified!' }
 if (params.nn_ref_version) { nn_ref_version = params.nn_ref_version } else { nn_ref_version = 'nnv1' }
 if (params.vae_ref_version) { vae_ref_version = params.vae_ref_version } else { vae_ref_version = 'gcrefv1' }
+if (params.plasm_ref_version) { plasm_ref_version = params.plasm_ref_version } else { plasm_ref_version = 'plasmv1' }
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -81,7 +82,8 @@ workflow NFANOSPP {
         ch_manifest,
         ch_ref_dir,
         nn_ref_version,
-        vae_ref_version
+        vae_ref_version,
+        plasm_ref_version
     )
     ch_versions = ch_versions.mix(ANOSPP.out.versions)
 
