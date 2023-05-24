@@ -11,7 +11,7 @@ WorkflowNfanospp.initialise(params, log)
 
 // TODO nf-core: Add all file path parameters for the pipeline to the list below
 // Check input path parameters to see if they exist
-def checkPathParamList = [ params.dada_table, params.adapters_fa, params.dada_stats, params.manifest ]
+def checkPathParamList = [ params.dada_table, params.adapters_fa, params.dada_stats, params.manifest, params.ref_dir ]
 for (param in checkPathParamList) { if (param) { file(param, checkIfExists: true) } }
 
 // Check mandatory parameters
@@ -19,6 +19,8 @@ if (params.dada_table) { ch_dada_table = file(params.dada_table) } else { exit 1
 if (params.adapters_fa) { ch_adapters_fa = file(params.adapters_fa) } else { exit 1, 'adapters FASTA not specified!' }
 if (params.dada_stats) { ch_dada_stats = file(params.dada_stats) } else { exit 1, 'DADA2 stats tsv not specified!' }
 if (params.manifest) { ch_manifest = file(params.manifest) } else { exit 1, 'sample manifest not specified!' }
+if (params.ref_dir) { ch_ref_dir = file(params.ref_dir) } else { exit 1, 'reference directory not specified!' }
+if (params.nn_ref_version) { nn_ref_version = params.nn_ref_version } else { nn_ref_version = 'nnv1' }
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -26,10 +28,10 @@ if (params.manifest) { ch_manifest = file(params.manifest) } else { exit 1, 'sam
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-ch_multiqc_config          = Channel.fromPath("$projectDir/assets/multiqc_config.yml", checkIfExists: true)
-ch_multiqc_custom_config   = params.multiqc_config ? Channel.fromPath( params.multiqc_config, checkIfExists: true ) : Channel.empty()
-ch_multiqc_logo            = params.multiqc_logo   ? Channel.fromPath( params.multiqc_logo, checkIfExists: true ) : Channel.empty()
-ch_multiqc_custom_methods_description = params.multiqc_methods_description ? file(params.multiqc_methods_description, checkIfExists: true) : file("$projectDir/assets/methods_description_template.yml", checkIfExists: true)
+// ch_multiqc_config          = Channel.fromPath("$projectDir/assets/multiqc_config.yml", checkIfExists: true)
+// ch_multiqc_custom_config   = params.multiqc_config ? Channel.fromPath( params.multiqc_config, checkIfExists: true ) : Channel.empty()
+// ch_multiqc_logo            = params.multiqc_logo   ? Channel.fromPath( params.multiqc_logo, checkIfExists: true ) : Channel.empty()
+// ch_multiqc_custom_methods_description = params.multiqc_methods_description ? file(params.multiqc_methods_description, checkIfExists: true) : file("$projectDir/assets/methods_description_template.yml", checkIfExists: true)
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -75,7 +77,9 @@ workflow NFANOSPP {
         ch_dada_table,
         ch_adapters_fa,
         ch_dada_stats,
-        ch_manifest
+        ch_manifest,
+        ch_ref_dir,
+        'nnv1'
     )
     ch_versions = ch_versions.mix(ANOSPP.out.versions)
 

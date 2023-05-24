@@ -13,11 +13,11 @@ tools:
 
 input:
   # Only when we have meta
-  # - meta:
-  #     type: map
-  #     description: |
-  #       Groovy Map containing sample information
-  #       e.g. [ id:'test', single_end:false ]
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [ id:'test', single_end:false ]
 
   - haps_tsv:
       type: file
@@ -36,11 +36,11 @@ input:
 
 output:
   #Only when we have meta
-  # - meta:
-  #     type: map
-  #     description: |
-  #       Groovy Map containing sample information
-  #       e.g. [ id:'test', single_end:false ]
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [ id:'test', single_end:false ]
 
   - versions:
       type: file
