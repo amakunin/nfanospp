@@ -10,17 +10,43 @@
             "type": "object",
             "fa_icon": "fas fa-terminal",
             "description": "Define where the pipeline should find input data and save output data.",
-            "required": ["input", "outdir"],
+            "required": ["manifest", "dada_table", "dada_stats", "adapters_fa", "ref_dir", "outdir"],
             "properties": {
-                "input": {
+                "manifest": {
                     "type": "string",
                     "format": "file-path",
-                    "mimetype": "text/csv",
-                    "pattern": "^\\S+\\.csv$",
-                    "schema": "assets/schema_input.json",
-                    "description": "Path to comma-separated file containing information about the samples in the experiment.",
-                    "help_text": "You will need to create a design file with information about the samples in your experiment before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row. See [usage docs](https://nf-co.re/nfanospp/usage#samplesheet-input).",
-                    "fa_icon": "fas fa-file-csv"
+                    "mimetype": "text/tsv",
+                    "pattern": "^\\S+\\.tsv$",
+                    "description": "Path to tab-separated file containing information about the samples in the experiment.",
+                    "help_text": "Sample manifest containing information about sample names and sequencing file locations.",
+                    "fa_icon": "fas fa-file-tsv"
+                },
+                "dada_table": {
+                    "type": "string",
+                    "format": "file-path",
+                    "mimetype": "text/tsv",
+                    "pattern": "^\\S+\\.tsv$",
+                    "description": "Path to tab-separated file containing DADA2 table.",
+                    "help_text": "DADA2 table has sample names, sequences as columns, and read counts as values.",
+                    "fa_icon": "fas fa-file-tsv"
+                },
+                "dada_stats": {
+                    "type": "string",
+                    "format": "file-path",
+                    "mimetype": "text/tsv",
+                    "pattern": "^\\S+\\.tsv$",
+                    "description": "Path to tab-separated file with DADA2 stats.",
+                    "help_text": "DADA2 stats has sample names as rows and read counts through filtering as columns.",
+                    "fa_icon": "fas fa-file-tsv"
+                },
+                "adapters_fa": {
+                    "type": "string",
+                    "format": "file-path",
+                    "mimetype": "text",
+                    "pattern": "^\\S+\\.fa$",
+                    "description": "Path to fasta file with adapters.",
+                    "help_text": "Adapters file contains linked primer sequences for all targets as FORWARD...RC_REVERSE with special chars acceptable by cutadapt.",
+                    "fa_icon": "far fa-file-code"
                 },
                 "outdir": {
                     "type": "string",
@@ -43,40 +69,36 @@
             }
         },
         "reference_genome_options": {
-            "title": "Reference genome options",
+            "title": "Reference options",
             "type": "object",
             "fa_icon": "fas fa-dna",
-            "description": "Reference genome related files and options required for the workflow.",
+            "description": "Reference related files and options required for the workflow.",
             "properties": {
-                "genome": {
-                    "type": "string",
-                    "description": "Name of iGenomes reference.",
-                    "fa_icon": "fas fa-book",
-                    "help_text": "If using a reference genome configured in the pipeline using iGenomes, use this parameter to give the ID for the reference. This is then used to build the full paths for all required reference genome files e.g. `--genome GRCh38`. \n\nSee the [nf-core website docs](https://nf-co.re/usage/reference_genomes) for more details."
-                },
-                "fasta": {
-                    "type": "string",
-                    "format": "file-path",
-                    "mimetype": "text/plain",
-                    "pattern": "^\\S+\\.fn?a(sta)?(\\.gz)?$",
-                    "description": "Path to FASTA genome file.",
-                    "help_text": "This parameter is *mandatory* if `--genome` is not specified. If you don't have a BWA index available this will be generated for you automatically. Combine with `--save_reference` to save BWA index for future runs.",
-                    "fa_icon": "far fa-file-code"
-                },
-                "igenomes_base": {
+                "ref_dir": {
                     "type": "string",
                     "format": "directory-path",
-                    "description": "Directory / URL base for iGenomes references.",
-                    "default": "s3://ngi-igenomes/igenomes",
-                    "fa_icon": "fas fa-cloud-download-alt",
-                    "hidden": true
+                    "mimetype": "text",
+                    "description": "Reference directory.",
+                    "help_text": "Directory where nn, vae and plasm reference databases",
+                    "fa_icon": "fas fa-folder-open"
                 },
-                "igenomes_ignore": {
-                    "type": "boolean",
-                    "description": "Do not load the iGenomes reference config.",
-                    "fa_icon": "fas fa-ban",
-                    "hidden": true,
-                    "help_text": "Do not load `igenomes.config` when running the pipeline. You may choose this option if you observe clashes between custom parameters and those supplied in `igenomes.config`."
+                "nn_ref_version": {
+                    "type": "string",
+                    "description": "Reference dataset version for nearest neighbour assignment in mosquito species ID",
+                    "default": "nnv1",
+                    "fa_icon": "fas fa-users-cog"
+                },
+                "vae_ref_version": {
+                    "type": "string",
+                    "description": "Reference dataset version for variational auto-encoder assignment in mosquito species ID",
+                    "default": "gcrefv1",
+                    "fa_icon": "fas fa-users-cog"
+                },
+                "plasm_ref_version": {
+                    "type": "string",
+                    "description": "Reference dataset version for Plasmodium species ID",
+                    "default": "plasmv1",
+                    "fa_icon": "fas fa-users-cog"
                 }
             }
         },

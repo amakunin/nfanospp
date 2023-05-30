@@ -1,0 +1,56 @@
+name: "anosppqc"
+description: "ANOSPP data QC summary and plots"
+keywords:
+  - amplicon
+tools:
+  - "anosppqc":
+      description: "ANOSPP data QC summary and plots"
+      homepage: "None"
+      documentation: "None"
+      tool_dev_url: "None"
+      doi: ""
+      licence: "['MIT']"
+
+input:
+  # Only when we have meta
+  # - meta:
+  #     type: map
+  #     description: |
+  #       Groovy Map containing sample information
+  #       e.g. [ id:'test', single_end:false ]
+
+  - haps_tsv:
+      type: file
+      description: haplotypes tsv file
+      pattern: "*.tsv"
+
+  - manifest:
+      type: file
+      description: samples manifest
+      pattern: "*.{csv,tsv}"
+
+  - stats_tsv:
+      type: file
+      description: DADA2 statistics tsv file
+      pattern: "*.tsv"
+
+output:
+  #Only when we have meta
+  # - meta:
+  #     type: map
+  #     description: |
+  #       Groovy Map containing sample information
+  #       e.g. [ id:'test', single_end:false ]
+
+  - versions:
+      type: file
+      description: File containing software versions
+      pattern: "versions.yml"
+
+  - qc_plots:
+      type: file
+      description: static QC plots
+      pattern: "*.png"
+
+authors:
+  - "@amakunin"

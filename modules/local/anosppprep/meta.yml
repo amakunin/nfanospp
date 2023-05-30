@@ -1,0 +1,51 @@
+name: "anosppprep"
+description: "ANOSPP data deplexing and prep"
+keywords:
+  - amplicon
+tools:
+  - "anosppprep":
+      description: "ANOSPP data deplexing and prep"
+      homepage: "None"
+      documentation: "None"
+      tool_dev_url: "None"
+      doi: ""
+      licence: "['MIT']"
+
+input:
+  # Only when we have meta
+  # - meta:
+  #     type: map
+  #     description: |
+  #       Groovy Map containing sample information
+  #       e.g. [ id:'test', single_end:false ]
+
+  - dada_table:
+      type: file
+      description: DADA2 output table
+      pattern: "*.tsv"
+
+  - adapters_df:
+      type: file
+      description: fasta file with adapters used for demultiplexing amplicons
+      pattern: "*.{fa,fasta}"
+
+output:
+  #Only when we have meta
+  # - meta:
+  #     type: map
+  #     description: |
+  #       Groovy Map containing sample information
+  #       e.g. [ id:'test', single_end:false ]
+
+  - versions:
+      type: file
+      description: File containing software versions
+      pattern: "versions.yml"
+
+  - haps_tsv:
+      type: file
+      description: Amplicon haplotypes tsv file
+      pattern: "*.tsv"
+
+authors:
+  - "@amakunin"
