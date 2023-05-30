@@ -5,8 +5,8 @@ process ANOSPPVAE {
 
     conda "bioconda::anospp-analysis=0.2.1"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/anospp-analysis:0.2.1--pyh7cba7a3_0' :
-        'quay.io/biocontainers/anospp-analysis:0.2.1--pyh7cba7a3_0' }"
+        'https://depot.galaxyproject.org/singularity/anospp-analysis:0.2.1--pyhdfd78af_1' :
+        'quay.io/biocontainers/anospp-analysis:0.2.1--pyhdfd78af_1' }"
 
     input:
     path nn_haps_tsv

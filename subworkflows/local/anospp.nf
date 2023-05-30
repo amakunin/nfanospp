@@ -31,8 +31,8 @@ workflow ANOSPP {
     ANOSPPNN ( ANOSPPPREP.out.haps_tsv, manifest, dada_stats, ref_dir, nn_ref_version )
     ch_versions = ch_versions.mix ( ANOSPPNN.out.versions )
 
-    // ANOSPPVAE ( ANOSPPNN.out.nn_haps_tsv, ANOSPPNN.out.nn_assignment, ref_dir, vae_ref_version )
-    // ch_versions = ch_versions.mix ( ANOSPPVAE.out.versions )
+    ANOSPPVAE ( ANOSPPNN.out.nn_haps_tsv, ANOSPPNN.out.nn_assignment, ref_dir, vae_ref_version )
+    ch_versions = ch_versions.mix ( ANOSPPVAE.out.versions )
 
     ANOSPPPLASM ( ANOSPPPREP.out.haps_tsv, manifest, dada_stats, ref_dir, plasm_ref_version )
     ch_versions = ch_versions.mix ( ANOSPPNN.out.versions )
