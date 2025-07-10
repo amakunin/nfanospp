@@ -3,19 +3,19 @@ process ANOSPPVAE {
     tag "npgrun"
     label 'process_low'
 
-    conda "bioconda::anospp-analysis=0.2.1"
+    conda "bioconda::anospp-analysis=0.4.0"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/anospp-analysis:0.2.1--pyhdfd78af_1' :
-        'quay.io/biocontainers/anospp-analysis:0.2.1--pyhdfd78af_1' }"
+        'https://depot.galaxyproject.org/singularity/anospp-analysis:0.4.0--pyhdfd78af_0' :
+        'quay.io/biocontainers/anospp-analysis:0.4.0--pyhdfd78af_0' }"
 
     input:
-    path nn_haps_tsv
+    path nn_haps
     path nn_assignment
-    path vae_ref_dir
+    path ref_dir
     val vae_ref_version
 
     output:
-    path "vae/final_assignments.tsv", emit: vae_assignment
+    path "vae/vae_assignment.tsv", emit: vae_assignment
     path "vae/summary.txt", emit: vae_summary
     path "vae/*.png", emit: vae_plots
     path "versions.yml"           , emit: versions
@@ -28,10 +28,9 @@ process ANOSPPVAE {
     def prefix = task.ext.prefix ?: ''
     """
     anospp-vae \\
-        -a $nn_haps_tsv \\
+        -a $nn_haps \\
         -m $nn_assignment \\
-        -r $vae_ref_version \\
-        --path_to_refversion $vae_ref_dir \\
+        -r ${ref_dir}/${vae_ref_version} \\
         -o vae \\
         -v
 

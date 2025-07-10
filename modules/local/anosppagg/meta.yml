@@ -1,10 +1,10 @@
-name: "anosppvae"
-description: "ANOSPP data variational auto-encoder mosquito species ID"
+name: "anosppqc"
+description: "ANOSPP data aggregation"
 keywords:
   - amplicon
 tools:
-  - "anosppvae":
-      description: "ANOSPP data variational auto-encoder mosquito species ID"
+  - "anosppqc":
+      description: "ANOSPP data aggregation"
       homepage: "None"
       documentation: "None"
       tool_dev_url: "None"
@@ -19,24 +19,25 @@ input:
   #       Groovy Map containing sample information
   #       e.g. [ id:'test', single_end:false ]
 
-  - nn_haps:
+  - comb_stats:
       type: file
-      description: NN annotated filtered haplotypes tsv
+      description: combined stats tsv file produced by anospp-prep
       pattern: "*.tsv"
 
   - nn_assignment:
       type: file
-      description: NN assignment tsv
+      description: NN assignment tsv file produced by anospp-nn
       pattern: "*.tsv"
-  
-  - ref_dir:
-      type: file
-      description: path to directory with ANOSPP reference data
 
-  - vae_ref_version:
-      type: string
-      description: VAE reference directory name within ref_dir
-      pattern: 'gcrefv*' 
+  - vae_assignment:
+      type: file
+      description: VAE assignment tsv file produced by anospp-vae
+      pattern: "*.tsv"
+
+  - plasm_assignment:
+      type: file
+      description: Plasmodium assignment tsv file produced by anospp-plasm
+      pattern: "*.tsv"
 
 output:
   #Only when we have meta
@@ -51,20 +52,10 @@ output:
       description: File containing software versions
       pattern: "versions.yml"
 
-  - vae_assignment:
+  - anospp_results:
       type: file
-      description: VAE assignment tsv
+      description: aggregated ANOSPP results for a run
       pattern: "*.tsv"
-  
-  - vae_summary:
-      type: file
-      description: VAE summary stats
-      pattern: "*.txt"
-
-  - vae_plots:
-      type: file
-      description: VAE assignment plots
-      pattern: "*.png"
 
 authors:
   - "@amakunin"

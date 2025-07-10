@@ -21,13 +21,27 @@ input:
 
   - dada_table:
       type: file
-      description: DADA2 output table
+      description: DADA2 output table tsv
       pattern: "*.tsv"
 
-  - adapters_df:
+  - adapters_fa:
       type: file
       description: fasta file with adapters used for demultiplexing amplicons
       pattern: "*.{fa,fasta}"
+
+  - manifest:
+      type: file
+      description: samples manifest
+      pattern: "*.{csv,tsv}"
+
+  - dada_stats:
+      type: file
+      description: DADA2 stats output summary tsv
+      pattern: "*.tsv"
+
+  - run_id:
+      type: integer
+      description: numeric run identifer to be included in plot headers
 
 output:
   #Only when we have meta
@@ -39,12 +53,17 @@ output:
 
   - versions:
       type: file
-      description: File containing software versions
+      description: file containing software versions
       pattern: "versions.yml"
 
-  - haps_tsv:
+  - haps:
       type: file
-      description: Amplicon haplotypes tsv file
+      description: amplicon haplotypes tsv
+      pattern: "*.tsv"
+
+  - comb_stats:
+      type: file
+      description: combined stats tsv file
       pattern: "*.tsv"
 
 authors:

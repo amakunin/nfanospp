@@ -85,7 +85,7 @@
                 "nn_ref_version": {
                     "type": "string",
                     "description": "Reference dataset version for nearest neighbour assignment in mosquito species ID",
-                    "default": "nnv1",
+                    "default": "nnv2",
                     "fa_icon": "fas fa-users-cog"
                 },
                 "vae_ref_version": {
@@ -98,6 +98,18 @@
                     "type": "string",
                     "description": "Reference dataset version for Plasmodium species ID",
                     "default": "plasmv1",
+                    "fa_icon": "fas fa-users-cog"
+                },
+                "nn_assignment_threshold": {
+                    "type": "number",
+                    "description": "NN assignment proportion for species call",
+                    "default": 0.7,
+                    "fa_icon": "fas fa-users-cog"
+                },
+                "run_id": {
+                    "type": "integer",
+                    "description": "Numeric run identifer to be included in plot headers",
+                    "default": 99999,
                     "fa_icon": "fas fa-users-cog"
                 }
             }

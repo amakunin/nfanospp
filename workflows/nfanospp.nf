@@ -20,9 +20,13 @@ if (params.adapters_fa) { ch_adapters_fa = file(params.adapters_fa) } else { exi
 if (params.dada_stats) { ch_dada_stats = file(params.dada_stats) } else { exit 1, 'DADA2 stats tsv not specified!' }
 if (params.manifest) { ch_manifest = file(params.manifest) } else { exit 1, 'sample manifest not specified!' }
 if (params.ref_dir) { ch_ref_dir = file(params.ref_dir) } else { exit 1, 'reference directory not specified!' }
-if (params.nn_ref_version) { nn_ref_version = params.nn_ref_version } else { nn_ref_version = 'nnv1' }
+
+// Check optional parameters
+if (params.nn_ref_version) { nn_ref_version = params.nn_ref_version } else { nn_ref_version = 'nnv2' }
 if (params.vae_ref_version) { vae_ref_version = params.vae_ref_version } else { vae_ref_version = 'gcrefv1' }
 if (params.plasm_ref_version) { plasm_ref_version = params.plasm_ref_version } else { plasm_ref_version = 'plasmv1' }
+if (params.nn_assignment_threshold) { nn_assignment_threshold = params.nn_assignment_threshold } else { nn_assignment_threshold = 0.7 }
+if (params.run_id) { run_id = params.run_id } else { run_id = 99999 }
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -57,7 +61,7 @@ include { ANOSPP } from '../subworkflows/local/anospp'
 //
 // include { FASTQC                      } from '../modules/nf-core/fastqc/main'
 // include { MULTIQC                     } from '../modules/nf-core/multiqc/main'
-// include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoftwareversions/main'
+include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoftwareversions/main'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -83,21 +87,15 @@ workflow NFANOSPP {
         ch_ref_dir,
         nn_ref_version,
         vae_ref_version,
-        plasm_ref_version
+        plasm_ref_version,
+        nn_assignment_threshold,
+        run_id
     )
     ch_versions = ch_versions.mix(ANOSPP.out.versions)
 
-    //
-    // MODULE: Run FastQC
-    //
-    // FASTQC (
-    //     INPUT_CHECK.out.reads
-    // )
-    // ch_versions = ch_versions.mix(FASTQC.out.versions.first())
-
-    // CUSTOM_DUMPSOFTWAREVERSIONS (
-    //     ch_versions.unique().collectFile(name: 'collated_versions.yml')
-    // )
+    CUSTOM_DUMPSOFTWAREVERSIONS (
+        ch_versions.unique().collectFile(name: 'collated_versions.yml')
+    )
 
     //
     // MODULE: MultiQC

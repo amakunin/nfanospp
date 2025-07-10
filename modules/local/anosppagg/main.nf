@@ -1,5 +1,5 @@
 
-process ANOSPPQC {
+process ANOSPPAGG {
     tag "npgrun"
     label 'process_low'
 
@@ -9,11 +9,13 @@ process ANOSPPQC {
         'quay.io/biocontainers/anospp-analysis:0.4.0--pyhdfd78af_0' }"
 
     input:
-    path haps
     path comb_stats
+    path nn_assignment
+    path vae_assignment
+    path plasm_assignment
 
     output:
-    path "qc/*.png", emit: qc_plots
+    path "anospp_results.tsv", emit: anospp_results
     path "versions.yml"           , emit: versions
 
     when:
@@ -23,11 +25,12 @@ process ANOSPPQC {
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: ''
     """
-    anospp-qc \\
-        -a $haps \\
+    anospp-agg -v \\
         -s $comb_stats \\
-        -o qc \\
-        -v
+        -n $nn_assignment \\
+        -e $vae_assignment \\
+        -p $plasm_assignment \\
+        -o anospp_results.tsv        
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

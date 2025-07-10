@@ -19,19 +19,14 @@ input:
   #       Groovy Map containing sample information
   #       e.g. [ id:'test', single_end:false ]
 
-  - haps_tsv:
+  - haps:
       type: file
-      description: haplotypes tsv file
+      description: haplotypes tsv file produced by anospp-prep
       pattern: "*.tsv"
 
-  - manifest:
+  - comb_stats:
       type: file
-      description: samples manifest
-      pattern: "*.{csv,tsv}"
-
-  - stats_tsv:
-      type: file
-      description: DADA2 statistics tsv file
+      description: combined stats tsv file produced by anospp-prep
       pattern: "*.tsv"
 
 output:

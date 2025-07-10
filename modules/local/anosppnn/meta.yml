@@ -13,43 +13,76 @@ tools:
 
 input:
   # Only when we have meta
-  - meta:
-      type: map
-      description: |
-        Groovy Map containing sample information
-        e.g. [ id:'test', single_end:false ]
+  # - meta:
+  #     type: map
+  #     description: |
+  #       Groovy Map containing sample information
+  #       e.g. [ id:'test', single_end:false ]
 
-  - haps_tsv:
+  - haps:
       type: file
-      description: haplotypes tsv file
+      description: haplotypes tsv file produced by anospp-prep
       pattern: "*.tsv"
 
-  - manifest:
+  - comb_stats:
       type: file
-      description: samples manifest
-      pattern: "*.{csv,tsv}"
-
-  - stats_tsv:
-      type: file
-      description: DADA2 statistics tsv file
+      description: combined stats tsv file produced by anospp-prep
       pattern: "*.tsv"
+
+  - ref_dir:
+      type: file
+      description: path to directory with ANOSPP reference data
+
+  - nn_ref_version:
+      type: string
+      description: NN reference directory name within ref_dir
+      pattern: 'nnv*'  
+
+  - plasm_ref_version:
+      type: string
+      description: Plasmodium reference directory name within ref_dir
+      pattern: 'plasmv*'
+
+  - plasm_assignment:
+      type: file
+      description: Plasmodium assignment tsv produced with anospp-plasm
+      pattern: '*.tsv'
+
+  - nn_assignment_threshold:
+      type: number
+      description: NN required assignment fraction for species naming
 
 output:
   #Only when we have meta
-  - meta:
-      type: map
-      description: |
-        Groovy Map containing sample information
-        e.g. [ id:'test', single_end:false ]
+  # - meta:
+  #     type: map
+  #     description: |
+  #       Groovy Map containing sample information
+  #       e.g. [ id:'test', single_end:false ]
 
   - versions:
       type: file
-      description: File containing software versions
+      description: file containing software versions
       pattern: "versions.yml"
 
-  - qc_plots:
+  - nn_haps:
       type: file
-      description: static QC plots
+      description: NN annotated filtered haplotypes tsv
+      pattern: "*.tsv"
+
+  - nn_assignment:
+      type: file
+      description: NN assignment tsv
+      pattern: "*.tsv"
+  
+  - nn_summary:
+      type: file
+      description: NN summary stats
+      pattern: "*.txt"
+
+  - nn_plots:
+      type: file
+      description: NN assignment plots
       pattern: "*.png"
 
 authors:

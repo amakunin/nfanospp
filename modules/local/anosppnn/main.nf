@@ -3,24 +3,26 @@ process ANOSPPNN {
     tag "npgrun"
     label 'process_low'
 
-    conda "bioconda::anospp-analysis=0.2.1"
+    conda "bioconda::anospp-analysis=0.4.0"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/anospp-analysis:0.2.1--pyh7cba7a3_0' :
-        'quay.io/biocontainers/anospp-analysis:0.2.1--pyh7cba7a3_0' }"
+        'https://depot.galaxyproject.org/singularity/anospp-analysis:0.4.0--pyhdfd78af_0' :
+        'quay.io/biocontainers/anospp-analysis:0.4.0--pyhdfd78af_0' }"
 
     input:
-    path haps_tsv
-    path manifest
-    path stats_tsv
-    path nn_ref_dir
+    path haps
+    path comb_stats
+    path ref_dir
     val nn_ref_version
+    val plasm_ref_version
+    path plasm_assignment
+    val nn_assignment_threshold
 
     output:
-    path "nn/non_error_haplotypes.tsv", emit: nn_haps_tsv
+    path "nn/nn_hap_summary.tsv", emit: nn_haps
     path "nn/nn_assignment.tsv", emit: nn_assignment
-    path "nn/summary.txt", emit: nn_summary
+    path "nn/nn_summary.txt", emit: nn_summary
     path "nn/*.png", emit: nn_plots
-    path "versions.yml"           , emit: versions
+    path "versions.yml", emit: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -30,11 +32,13 @@ process ANOSPPNN {
     def prefix = task.ext.prefix ?: ''
     """
     anospp-nn \\
-        -a $haps_tsv \\
-        -m $manifest \\
-        -s $stats_tsv \\
-        -r $nn_ref_version \\
-        --path_to_refversion $nn_ref_dir \\
+        -a $haps \\
+        -s $comb_stats \\
+        -r ${ref_dir}/${nn_ref_version} \\
+        --plasm_assignment $plasm_assignment \\
+        --plasm_colors ${ref_dir}/${plasm_ref_version}/species_colours.csv \\
+        --nn_assignment_threshold $nn_assignment_threshold \\
+        --legend_cutoff 0.05 \\
         -o nn \\
         -v
 
