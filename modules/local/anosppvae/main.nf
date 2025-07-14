@@ -17,7 +17,7 @@ process ANOSPPVAE {
     output:
     path "vae/vae_assignment.tsv", emit: vae_assignment
     path "vae/summary.txt", emit: vae_summary
-    path "vae/*.png", emit: vae_plots
+    path "vae/*.png", optional: true, emit: vae_plots
     path "versions.yml"           , emit: versions
 
     when:

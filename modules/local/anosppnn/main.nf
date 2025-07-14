@@ -1,7 +1,7 @@
 
 process ANOSPPNN {
     tag "npgrun"
-    label 'process_low'
+    label 'process_medium'
 
     conda "bioconda::anospp-analysis=0.4.0"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
