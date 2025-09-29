@@ -1,7 +1,7 @@
 
 process ANOSPPNN {
     tag "npgrun"
-    label 'process_medium'
+    label 'process_single'
 
     conda "bioconda::anospp-analysis=0.4.0"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
@@ -18,6 +18,8 @@ process ANOSPPNN {
     val nn_assignment_threshold
 
     output:
+    path "nn/nn_dist_to_ref.tsv", emit: nn_dist_to_ref
+    path "nn/assignment_*.tsv", emit: nn_level_assignments
     path "nn/nn_hap_summary.tsv", emit: nn_haps
     path "nn/nn_assignment.tsv", emit: nn_assignment
     path "nn/nn_summary.txt", emit: nn_summary
