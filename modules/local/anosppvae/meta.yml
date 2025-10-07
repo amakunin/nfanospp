@@ -1,0 +1,70 @@
+name: "anosppvae"
+description: "ANOSPP data variational auto-encoder mosquito species ID"
+keywords:
+  - amplicon
+tools:
+  - "anosppvae":
+      description: "ANOSPP data variational auto-encoder mosquito species ID"
+      homepage: "None"
+      documentation: "None"
+      tool_dev_url: "None"
+      doi: ""
+      licence: "['MIT']"
+
+input:
+  # Only when we have meta
+  # - meta:
+  #     type: map
+  #     description: |
+  #       Groovy Map containing sample information
+  #       e.g. [ id:'test', single_end:false ]
+
+  - nn_haps:
+      type: file
+      description: NN annotated filtered haplotypes tsv
+      pattern: "*.tsv"
+
+  - nn_assignment:
+      type: file
+      description: NN assignment tsv
+      pattern: "*.tsv"
+  
+  - ref_dir:
+      type: file
+      description: path to directory with ANOSPP reference data
+
+  - vae_ref_version:
+      type: string
+      description: VAE reference directory name within ref_dir
+      pattern: 'gcrefv*' 
+
+output:
+  #Only when we have meta
+  # - meta:
+  #     type: map
+  #     description: |
+  #       Groovy Map containing sample information
+  #       e.g. [ id:'test', single_end:false ]
+
+  - versions:
+      type: file
+      description: File containing software versions
+      pattern: "versions.yml"
+
+  - vae_assignment:
+      type: file
+      description: VAE assignment tsv
+      pattern: "*.tsv"
+  
+  - vae_summary:
+      type: file
+      description: VAE summary stats
+      pattern: "*.txt"
+
+  - vae_plots:
+      type: file
+      description: VAE assignment plots
+      pattern: "*.png"
+
+authors:
+  - "@amakunin"

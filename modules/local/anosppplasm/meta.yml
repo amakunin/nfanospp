@@ -1,0 +1,70 @@
+name: "anosppnn"
+description: "ANOSPP data nearest neighbour mosquito species ID"
+keywords:
+  - amplicon
+tools:
+  - "anosppnn":
+      description: "ANOSPP data nearest neighbour mosquito species ID"
+      homepage: "None"
+      documentation: "None"
+      tool_dev_url: "None"
+      doi: ""
+      licence: "['MIT']"
+
+input:
+  # Only when we have meta
+  # - meta:
+  #     type: map
+  #     description: |
+  #       Groovy Map containing sample information
+  #       e.g. [ id:'test', single_end:false ]
+
+  - haps:
+      type: file
+      description: haplotypes tsv file produced by anospp-prep
+      pattern: "*.tsv"
+
+  - comb_stats:
+      type: file
+      description: combined stats tsv file produced by anospp-prep
+      pattern: "*.tsv"
+
+  - ref_dir:
+      type: file
+      description: path to directory with ANOSPP reference data
+
+  - plasm_ref_version:
+      type: string
+      description: Plasmodium reference directory name within ref_dir
+      pattern: 'plasmv*'
+
+output:
+  #Only when we have meta
+  # - meta:
+  #     type: map
+  #     description: |
+  #       Groovy Map containing sample information
+  #       e.g. [ id:'test', single_end:false ]
+
+  - versions:
+      type: file
+      description: file containing software versions
+      pattern: "versions.yml"
+
+  - plasm_haps:
+      type: file
+      description: Plasmodium annotated filtered haplotypes tsv
+      pattern: "*.tsv"
+
+  - plasm_assignment:
+      type: file
+      description: Plasmodium assignment tsv
+      pattern: "*.tsv"
+
+  - plasm_plots:
+      type: file
+      description: interactive Plasmodium assignment plots
+      pattern: "*.html"
+
+authors:
+  - "@amakunin"
